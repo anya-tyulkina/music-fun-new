@@ -27,14 +27,16 @@ export const playlistsApi = baseApi.injectEndpoints({
             query: (playlistId) => ({
                 method: 'delete',
                 url: `playlists/${playlistId}`,
-            })
+            }),
+            invalidatesTags: ['playlists']
         }),
         updatePlaylist: build.mutation<void, { playlistId: string, body: UpdatePlaylistArgs }>({
             query: ({playlistId, body}) => ({
                 method: 'put',
                 url: `playlists/${playlistId}`,
                 body
-            })
+            }),
+            invalidatesTags: ['playlists']
         }),
     }),
 })
