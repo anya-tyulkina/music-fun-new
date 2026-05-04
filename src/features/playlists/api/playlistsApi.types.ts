@@ -1,5 +1,5 @@
-import type { CurrentUserReaction } from '@/common/enums'
-import type { Images, Tag, User } from '@/common/types'
+import type {CurrentUserReaction} from '@/common/enums'
+import type {Images, Tag, User} from '@/common/types'
 
 export type PlaylistsResponse = {
     data: PlaylistData[]
@@ -50,4 +50,15 @@ export type FetchPlaylistsArgs = {
 export type CreatePlaylistArgs = {
     title: string
     description: string
+}
+
+export type UpdatePlaylistArgs = {
+    data: {
+        type: string,
+        attributes: {
+            title: string,
+            description: string,
+            tagIds: string[]
+        }
+    }
 }

@@ -1,25 +1,13 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import type {CreatePlaylistArgs, PlaylistData, PlaylistsResponse} from './playlistsApi.types'
+import type {CreatePlaylistArgs, PlaylistData, PlaylistsResponse, UpdatePlaylistArgs} from './playlistsApi.types'
+import {baseApi} from "@/app/model/baseApi.ts";
 
-export const playlistsApi = createApi({
-    reducerPath: 'playlistsApi',
-    tagTypes: ['playlists'],
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_BASE_URL,
-        headers: {
-            'API-KEY': import.meta.env.VITE_API_KEY,
-        },
-        prepareHeaders: headers => {
-            headers.set('Authorization', `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`)
-            return headers
-        },
-    }),
+export const playlistsApi = baseApi.injectEndpoints({
     endpoints: build => ({
-        fetchPlaylists: build.query<PlaylistsResponse, void>({
+        fetchPlaylist: build.query<PlaylistsResponse, void>({
             query: () => 'playlists',
             providesTags: ['playlists']
         }),
-        createPlaylists: build.mutation<{ data: PlaylistData }, CreatePlaylistArgs>({
+        createPlaylist: build.mutation<{ data: PlaylistData }, CreatePlaylistArgs>({
             query: ({title, description}) => ({
                 method: 'post',
                 url: 'playlists',
@@ -35,7 +23,25 @@ export const playlistsApi = createApi({
             }),
             invalidatesTags: ['playlists']
         }),
+        deletePlaylist: build.mutation<void, string>({
+            query: (playlistId) => ({
+                method: 'delete',
+                url: `playlists/${playlistId}`,
+            })
+        }),
+        updatePlaylist: build.mutation<void, { playlistId: string, body: UpdatePlaylistArgs }>({
+            query: ({playlistId, body}) => ({
+                method: 'put',
+                url: `playlists/${playlistId}`,
+                body
+            })
+        }),
     }),
 })
 
-export const {useFetchPlaylistsQuery, useCreatePlaylistsMutation} = playlistsApi
+export const {
+    useFetchPlaylistQuery,
+    useCreatePlaylistMutation,
+    useDeletePlaylistMutation,
+    useUpdatePlaylistMutation
+} = playlistsApi
