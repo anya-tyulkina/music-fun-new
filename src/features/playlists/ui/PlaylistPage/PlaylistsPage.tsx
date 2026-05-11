@@ -4,8 +4,8 @@ import {CreatePlaylistForm} from "./CreatePlaylistForm/CreatePlaylistForm.tsx"
 import s from './PlaylistsPage.module.css'
 import {useState} from "react";
 import type {PlaylistData, UpdatePlaylistArgs} from "../../api/playlistsApi.types.ts";
-import {PlaylistItem} from "@/features/playlists/ui/PlaylistPage/playlistItem/PlaylistItem.tsx";
-import {EditPlaylistForm} from "@/features/playlists/ui/PlaylistPage/EditPlaylistForm.tsx";
+import {PlaylistItem} from "@/features/playlists/ui/PlaylistPage/PlaylistItem/PlaylistItem.tsx";
+import {EditPlaylistForm} from "@/features/playlists/ui/PlaylistPage/EditPlaylistForm/EditPlaylistForm.tsx";
 
 export const PlaylistsPage = () => {
     const {data} = useFetchPlaylistQuery()
