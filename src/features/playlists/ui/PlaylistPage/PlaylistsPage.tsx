@@ -4,7 +4,7 @@ import s from './PlaylistsPage.module.css'
 import {type ChangeEvent, useState} from "react";
 import {useDebounceValue} from "@/common/hooks";
 import {Pagination} from "@/common/components";
-import {Playlists} from "@/features/playlists/ui/Playlists/Playlists.tsx";
+import {Playlists} from "@/features/playlists/ui/PlaylistPage/Playlists/Playlists.tsx";
 
 export const PlaylistsPage = () => {
     const [search, setSearch] = useState('')
