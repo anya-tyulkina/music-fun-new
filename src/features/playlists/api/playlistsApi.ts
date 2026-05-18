@@ -43,9 +43,36 @@ export const playlistsApi = baseApi.injectEndpoints({
                 url: `playlists/${playlistId}`,
                 body
             }),
+            onQueryStarted: async ({playlistId, body}, {queryFulfilled, dispatch, getState}) => {
+
+                const args = playlistsApi.util.selectCachedArgsForQuery(getState(), 'fetchPlaylists')
+
+                const patchCollections: any[] = []
+
+                args.forEach(arg => {
+                    patchCollections.push(dispatch(playlistsApi.util.updateQueryData('fetchPlaylists', {
+                            pageNumber: arg.pageNumber,
+                            pageSize: arg.pageSize,
+                            search: arg.search
+                        }, (state) => {
+                            const index = state.data.findIndex(el => el.id === playlistId)
+                            if (index !== -1) {
+                                state.data[index].attributes = {...state.data[index].attributes, ...body}
+                            }
+                        })
+                    ))
+                })
+
+                try {
+                    await queryFulfilled
+                } catch (error) {
+                    patchCollections.forEach((patchCollection)=>{
+                        patchCollection.undo()
+                    })
+                }
+            },
             invalidatesTags: ['playlists']
         }),
-
         uploadPlaylistCover: build.mutation<Images, { playlistId: string, file: File }>({
             query: ({playlistId, file}) => {
 
