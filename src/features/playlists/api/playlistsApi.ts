@@ -10,7 +10,7 @@ import {baseApi} from "@/app/model/baseApi.ts";
 
 export const playlistsApi = baseApi.injectEndpoints({
     endpoints: build => ({
-        fetchPlaylist: build.query<PlaylistsResponse, FetchPlaylistsArgs>({
+        fetchPlaylists: build.query<PlaylistsResponse, FetchPlaylistsArgs>({
             query: (params) => ({url: 'playlists', params}),
             providesTags: ['playlists']
         }),
@@ -26,7 +26,7 @@ export const playlistsApi = baseApi.injectEndpoints({
                             description
                         }
                     }
-                }
+                },
             }),
             invalidatesTags: ['playlists']
         }),
@@ -71,7 +71,7 @@ export const playlistsApi = baseApi.injectEndpoints({
 })
 
 export const {
-    useFetchPlaylistQuery,
+    useFetchPlaylistsQuery,
     useCreatePlaylistMutation,
     useDeletePlaylistMutation,
     useUpdatePlaylistMutation,

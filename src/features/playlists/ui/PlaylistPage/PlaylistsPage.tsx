@@ -1,4 +1,4 @@
-import {useFetchPlaylistQuery} from "../../api/playlistsApi.ts"
+import {useFetchPlaylistsQuery} from "../../api/playlistsApi.ts"
 import {CreatePlaylistForm} from "./CreatePlaylistForm/CreatePlaylistForm.tsx"
 import s from './PlaylistsPage.module.css'
 import {type ChangeEvent, useState} from "react";
@@ -12,7 +12,7 @@ export const PlaylistsPage = () => {
     const [pageSize, setPageSize] = useState(2)
 
     const debounceSearch = useDebounceValue(search)
-    const {data, isLoading} = useFetchPlaylistQuery({search: debounceSearch, pageNumber: currentPage, pageSize})
+    const {data, isLoading} = useFetchPlaylistsQuery({search: debounceSearch, pageNumber: currentPage, pageSize})
 
     const changePageSizeHandler =(size: number)=>{
         setCurrentPage(1)
@@ -24,10 +24,13 @@ export const PlaylistsPage = () => {
         setCurrentPage(1)
     }
 
+    if(isLoading) return <div>Skeleton Loading...</div>
+
+
     return (
         <div className={s.container}>
             <h1>Playlists page</h1>
-            <CreatePlaylistForm/>
+            <CreatePlaylistForm setCurrentPage={setCurrentPage}/>
             <Pagination currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
                         pagesCount={data?.meta.pagesCount || 1}
