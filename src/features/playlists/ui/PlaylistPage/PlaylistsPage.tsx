@@ -14,18 +14,17 @@ export const PlaylistsPage = () => {
     const debounceSearch = useDebounceValue(search)
     const {data, isLoading} = useFetchPlaylistsQuery({search: debounceSearch, pageNumber: currentPage, pageSize})
 
-    const changePageSizeHandler =(size: number)=>{
+    const changePageSizeHandler = (size: number) => {
         setCurrentPage(1)
         setPageSize(size)
     }
 
-    const searchPlaylistHandler =(e: ChangeEvent<HTMLInputElement, HTMLInputElement>)=>{
+    const searchPlaylistHandler = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setSearch(e.currentTarget.value)
         setCurrentPage(1)
     }
 
-    if(isLoading) return <div>Skeleton loading...</div>
-
+    if (isLoading) return <div>Skeleton loading...</div>
 
     return (
         <div className={s.container}>
@@ -40,7 +39,7 @@ export const PlaylistsPage = () => {
 
             <input type="search" placeholder={'Search...'} onChange={(e) => searchPlaylistHandler(e)}/>
 
-           <Playlists isLoading={isLoading} playlists={data?.data || []}/>
+            <Playlists isLoading={isLoading} playlists={data?.data || []}/>
         </div>
     )
 }

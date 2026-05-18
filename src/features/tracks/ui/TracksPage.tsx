@@ -4,10 +4,12 @@ import {LoadingTrigger} from "@/features/tracks/ui/LoadingTrigger/LoadingTrigger
 import {useInfinityScroll} from "@/common/hooks";
 
 export const TracksPage = () => {
-    const {data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage} = useFetchTracksInfiniteQuery()
+    const {data, isLoading, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage} = useFetchTracksInfiniteQuery()
     const pages = data?.pages.flatMap((page) => page.data) || []
 
     const {observerRef} = useInfinityScroll({isFetching, fetchNextPage, hasNextPage})
+
+    if (isLoading) return <div>Skeleton loading...</div>
 
     return (
         <div>
