@@ -24,7 +24,7 @@ export const PlaylistsPage = () => {
         setCurrentPage(1)
     }
 
-    if(isLoading) return <div>Skeleton Loading...</div>
+    if(isLoading) return <div>Skeleton loading...</div>
 
 
     return (
